@@ -12,7 +12,7 @@ jobs:
       - name: Checkout kubernetes-schema-validation repo
         uses: actions/checkout@v4
         with:
-          repository: datreeio/kubernetes-schema-validation
+          repository: elmy-team/kubernetes-schema-validation
           sparse-checkout: benchmark
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3

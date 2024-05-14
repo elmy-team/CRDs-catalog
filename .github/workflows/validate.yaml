@@ -1,0 +1,26 @@
+name: CRDs Schema validation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  kubeconform-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout kubernetes-schema-validation repo
+        uses: actions/checkout@v4
+        with:
+          repository: elmy-team/kubernetes-schema-validation
+          sparse-checkout: benchmark
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker://ghcr.io/yannh/kubeconform:latest
+        with:
+          entrypoint: '/kubeconform'
+          args: "-schema-location default -schema-location 'https://raw.githubusercontent.com/${{ github.event.pull_request.head.repo.full_name }}/${{ github.event.pull_request.head.ref }}/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' -skip CustomResourceDefinition -summary benchmark"

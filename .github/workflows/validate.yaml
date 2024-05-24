@@ -4,6 +4,13 @@ on:
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - CODEOWNERS
+      - LICENSE
+      - .gitignore
+      - README.md
+      - .krew.yaml
+      - index.yaml
 
 jobs:
   kubeconform-test:

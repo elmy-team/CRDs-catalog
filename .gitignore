@@ -12,3 +12,7 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Testing dirs
+
+testing

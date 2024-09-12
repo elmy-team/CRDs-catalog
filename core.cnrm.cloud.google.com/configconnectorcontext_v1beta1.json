@@ -1,0 +1,89 @@
+{
+  "description": "ConfigConnectorContext is the Schema for the ConfigConnectorContexts API",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": "string"
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "spec": {
+      "description": "ConfigConnectorContextSpec defines the desired state of ConfigConnectorContext",
+      "properties": {
+        "actuationMode": {
+          "description": "The actuation mode of Config Connector controls how resources are actuated onto the cloud provider.\nThis can be either 'Reconciling' or 'Paused'. The default is 'Reconciling' where resources get actuated.\nIn 'Paused', k8s resources are still reconciled with the api server but not actuated onto the cloud provider.",
+          "enum": [
+            "Reconciling",
+            "Paused"
+          ],
+          "type": "string"
+        },
+        "billingProject": {
+          "description": "Specifies the project to use for preconditions, quota and billing.\nShould only be used when requestProjectPolicy is set to BILLING_PROJECT.",
+          "type": "string"
+        },
+        "googleServiceAccount": {
+          "description": "The Google Service Account to be used by Config Connector to\nauthenticate with Google Cloud APIs in the associated namespace.",
+          "type": "string"
+        },
+        "requestProjectPolicy": {
+          "description": "Specifies which project to use for preconditions, quota, and billing for\nrequests made to Google Cloud APIs for resources in the associated\nnamespace. Must be one of 'SERVICE_ACCOUNT_PROJECT',\n'RESOURCE_PROJECT', or 'BILLING_PROJECT. Defaults to 'SERVICE_ACCOUNT_PROJECT'. If set to\n'SERVICE_ACCOUNT_PROJECT', uses the project that the Google Service\nAccount belongs to. If set to 'RESOURCE_PROJECT', uses the project that\nthe resource belongs to. If set to 'BILLING_PROJECT', uses the project specified by spec.billingProject.",
+          "enum": [
+            "SERVICE_ACCOUNT_PROJECT",
+            "RESOURCE_PROJECT",
+            "BILLING_PROJECT"
+          ],
+          "type": "string"
+        },
+        "stateIntoSpec": {
+          "description": "StateIntoSpec is the user override of the default value for the\n'cnrm.cloud.google.com/state-into-spec' annotation if the annotation is\nunset for a resource.\n'Absent' means that unspecified fields in the resource spec stay\nunspecified after successful reconciliation.\n'Merge' means that unspecified fields in the resource spec are populated\nafter a successful reconciliation if those unspecified fields are\ncomputed/defaulted by the API. It is only applicable to resources\nsupporting the 'Merge' option.",
+          "enum": [
+            "Absent",
+            "Merge"
+          ],
+          "type": "string"
+        },
+        "version": {
+          "description": "Version specifies the exact addon version to be deployed, eg 1.2.3\nOnly limited versions are supported; currently we are only supporting\nthe operator version and the previous minor version.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "googleServiceAccount"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "ConfigConnectorContextStatus defines the observed state of ConfigConnectorContext",
+      "properties": {
+        "errors": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "healthy": {
+          "type": "boolean"
+        },
+        "phase": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "healthy"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "spec"
+  ],
+  "type": "object"
+}

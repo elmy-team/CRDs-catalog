@@ -1,11 +1,12 @@
 {
+  "description": "GKEHubFeatureMembership is the Schema for the gkehub API",
   "properties": {
     "apiVersion": {
-      "description": "apiVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
       "type": "string"
     },
     "kind": {
-      "description": "kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
       "type": "string"
     },
     "metadata": {
@@ -66,7 +67,7 @@
                       ],
                       "properties": {
                         "external": {
-                          "description": "The GCP Service Account Email used for auth when secretType is gcpServiceAccount.\n\nAllowed value: The `email` field of an `IAMServiceAccount` resource.",
+                          "description": "The GCP Service Account Email used for auth when secretType is gcpServiceAccount. Allowed value: The `email` field of an `IAMServiceAccount` resource.",
                           "type": "string"
                         },
                         "name": {
@@ -147,7 +148,7 @@
                   ],
                   "properties": {
                     "external": {
-                      "description": "The Email of the Google Cloud Service Account (GSA) used for exporting Config Sync metrics to Cloud Monitoring. The GSA should have the Monitoring Metric Writer(roles/monitoring.metricWriter) IAM role. The Kubernetes ServiceAccount `default` in the namespace `config-management-monitoring` should be bound to the GSA.\n\nAllowed value: The `email` field of an `IAMServiceAccount` resource.",
+                      "description": "The Email of the Google Cloud Service Account (GSA) used for exporting Config Sync metrics to Cloud Monitoring. The GSA should have the Monitoring Metric Writer(roles/monitoring.metricWriter) IAM role. The Kubernetes ServiceAccount `default` in the namespace `config-management-monitoring` should be bound to the GSA. Allowed value: The `email` field of an `IAMServiceAccount` resource.",
                       "type": "string"
                     },
                     "name": {
@@ -198,7 +199,7 @@
                       ],
                       "properties": {
                         "external": {
-                          "description": "The GCP Service Account Email used for auth when secret_type is gcpserviceaccount. \n\nAllowed value: The `email` field of an `IAMServiceAccount` resource.",
+                          "description": "The GCP Service Account Email used for auth when secretType is gcpServiceAccount. Allowed value: The `email` field of an `IAMServiceAccount` resource.",
                           "type": "string"
                         },
                         "name": {
@@ -265,7 +266,7 @@
               "additionalProperties": false
             },
             "policyController": {
-              "description": "Policy Controller configuration for the cluster.",
+              "description": "**DEPRECATED** Configuring Policy Controller through the configmanagement feature is no longer recommended. Use the policycontroller feature instead.",
               "properties": {
                 "auditIntervalSeconds": {
                   "description": "Sets the interval for Policy Controller Audit Scans (in seconds). When set to 0, this disables audit functionality altogether.",
@@ -290,7 +291,7 @@
                   "description": "Specifies the backends Policy Controller should export metrics to. For example, to specify metrics should be exported to Cloud Monitoring and Prometheus, specify backends: [\"cloudmonitoring\", \"prometheus\"]. Default: [\"cloudmonitoring\", \"prometheus\"]",
                   "properties": {
                     "backends": {
-                      "description": " Specifies the list of backends Policy Controller will export to. Specifying an empty value `[]` disables metrics export.",
+                      "description": "Specifies the list of backends Policy Controller will export to. Specifying an empty value `[]` disables metrics export.",
                       "items": {
                         "type": "string"
                       },
@@ -359,7 +360,7 @@
           ],
           "properties": {
             "external": {
-              "description": "The name of the feature\n\nAllowed value: The Google Cloud resource name of a `GKEHubFeature` resource (format: `projects/{{project}}/locations/{{location}}/features/{{name}}`).",
+              "description": "The name of the feature. Allowed value: The Google Cloud resource name of a `GKEHubFeature` resource (format: `projects/{{project}}/locations/{{location}}/features/{{name}}`).",
               "type": "string"
             },
             "name": {
@@ -417,7 +418,7 @@
           ],
           "properties": {
             "external": {
-              "description": "The name of the membership\n\nAllowed value: The Google Cloud resource name of a `GKEHubMembership` resource (format: `projects/{{project}}/locations/{{location}}/memberships/{{name}}`).",
+              "description": "The name of the membership. Allowed value: The Google Cloud resource name of a `GKEHubMembership` resource (format: `projects/{{project}}/locations/{{location}}/memberships/{{name}}`).",
               "type": "string"
             },
             "name": {
@@ -482,7 +483,7 @@
                   "description": "Specifies the backends Policy Controller should export metrics to. For example, to specify metrics should be exported to Cloud Monitoring and Prometheus, specify backends: [\"cloudmonitoring\", \"prometheus\"]. Default: [\"cloudmonitoring\", \"prometheus\"]",
                   "properties": {
                     "backends": {
-                      "description": " Specifies the list of backends Policy Controller will export to. Specifying an empty value `[]` disables metrics export.",
+                      "description": "Specifies the list of backends Policy Controller will export to. Specifying an empty value `[]` disables metrics export.",
                       "items": {
                         "type": "string"
                       },
@@ -568,7 +569,7 @@
           ],
           "properties": {
             "external": {
-              "description": "The project of the feature\n\nAllowed value: The Google Cloud resource name of a `Project` resource (format: `projects/{{name}}`).",
+              "description": "The project of the feature. Allowed value: The Google Cloud resource name of a `Project` resource (format: `projects/{{name}}`).",
               "type": "string"
             },
             "name": {
@@ -596,7 +597,7 @@
     "status": {
       "properties": {
         "conditions": {
-          "description": "Conditions represent the latest available observation of the resource's current state.",
+          "description": "Conditions represent the latest available observations of the GKEHubFeatureMembership's current state.",
           "items": {
             "properties": {
               "lastTransitionTime": {
@@ -627,6 +628,7 @@
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the generation of the resource that was most recently observed by the Config Connector controller. If this is equal to metadata.generation, then that means that the current reported status reflects the most recent desired state of the resource.",
+          "format": "int64",
           "type": "integer"
         }
       },

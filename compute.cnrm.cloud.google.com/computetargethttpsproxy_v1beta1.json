@@ -49,7 +49,7 @@
             ],
             "properties": {
               "external": {
-                "description": "Allowed value: string of the format `projects/{{project}}/locations/{{location}}/certificates/{{value}}`, where {{value}} is the `name` field of a `CertificateManagerCertificate` resource.",
+                "description": "Allowed value: string of the format `projects/{{project}}/locations/global/certificates/{{value}}`, where {{value}} is the `name` field of a `CertificateManagerCertificate` resource.",
                 "type": "string"
               },
               "name": {
@@ -67,7 +67,7 @@
           "type": "array"
         },
         "certificateMapRef": {
-          "description": "A reference to the CertificateMap resource uri that identifies a\ncertificate map associated with the given target proxy. This field\ncan only be set for global target proxies.",
+          "description": "A reference to the CertificateMap resource uri that identifies a\ncertificate map associated with the given target proxy. This field\ncan only be set for global target proxies. This field is only supported\nfor EXTERNAL and EXTERNAL_MANAGED load balancing schemes.\nFor INTERNAL_MANAGED, use certificateManagerCertificates instead.\nsslCertificates and certificateMap fields can not be defined together.",
           "oneOf": [
             {
               "not": {
@@ -101,7 +101,7 @@
           ],
           "properties": {
             "external": {
-              "description": "Allowed value: string of the format `//certificatemanager.googleapis.com/projects/{{project}}/locations/{{location}}/certificateMaps/{{value}}`, where {{value}} is the `name` field of a `CertificateManagerCertificateMap` resource.",
+              "description": "Allowed value: string of the format `//certificatemanager.googleapis.com/projects/{{project}}/locations/global/certificateMaps/{{value}}`, where {{value}} is the `name` field of a `CertificateManagerCertificateMap` resource.",
               "type": "string"
             },
             "name": {

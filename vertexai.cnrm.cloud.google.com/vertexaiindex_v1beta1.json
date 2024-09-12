@@ -36,7 +36,8 @@
                   "properties": {
                     "bruteForceConfig": {
                       "description": "Configuration options for using brute force search, which simply implements the\nstandard linear search in the database for each query.",
-                      "type": "object"
+                      "type": "object",
+                      "x-kubernetes-preserve-unknown-fields": true
                     },
                     "treeAhConfig": {
                       "description": "Configuration options for using the tree-AH algorithm (Shallow tree + Asymmetric Hashing).\nPlease refer to this paper for more details: https://arxiv.org/abs/1908.10396.",

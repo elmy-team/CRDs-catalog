@@ -1379,6 +1379,10 @@
             "linuxNodeConfig": {
               "description": "Parameters that can be configured on Linux nodes.",
               "properties": {
+                "cgroupMode": {
+                  "description": "cgroupMode specifies the cgroup mode to be used on the node.",
+                  "type": "string"
+                },
                 "sysctls": {
                   "additionalProperties": {
                     "type": "string"
@@ -1387,9 +1391,6 @@
                   "type": "object"
                 }
               },
-              "required": [
-                "sysctls"
-              ],
               "type": "object",
               "additionalProperties": false
             },
@@ -2210,6 +2211,25 @@
               "properties": {
                 "clientCertificate": {
                   "description": "Base64 encoded public certificate used by clients to authenticate to the cluster endpoint.",
+                  "type": "string"
+                },
+                "clusterCaCertificate": {
+                  "description": "Base64 encoded public certificate that is the root of trust for the cluster.",
+                  "type": "string"
+                }
+              },
+              "type": "object",
+              "additionalProperties": false
+            },
+            "privateClusterConfig": {
+              "description": "Configuration for private clusters, clusters with private nodes.",
+              "properties": {
+                "privateEndpoint": {
+                  "description": "The internal IP address of this cluster's master endpoint.",
+                  "type": "string"
+                },
+                "publicEndpoint": {
+                  "description": "The external IP address of this cluster's master endpoint.",
                   "type": "string"
                 }
               },

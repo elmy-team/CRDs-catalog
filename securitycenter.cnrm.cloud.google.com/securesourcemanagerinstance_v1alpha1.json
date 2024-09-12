@@ -1,11 +1,12 @@
 {
+  "description": "SecureSourceManagerInstance is the Schema for the monitoring API",
   "properties": {
     "apiVersion": {
-      "description": "apiVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
       "type": "string"
     },
     "kind": {
-      "description": "kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
       "type": "string"
     },
     "metadata": {
@@ -13,31 +14,23 @@
     },
     "spec": {
       "properties": {
-        "cloudResource": {
-          "description": "Container for connection properties for delegation of access to GCP resources.",
-          "properties": {
-            "serviceAccountId": {
-              "description": "The account ID of the service created for the purpose of this connection.",
-              "type": "string"
-            }
+        "kmsKey": {
+          "description": "Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*.",
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
           },
-          "type": "object",
-          "additionalProperties": false
-        },
-        "description": {
-          "description": "A descriptive description for the connection.",
-          "type": "string"
-        },
-        "friendlyName": {
-          "description": "A descriptive name for the connection.",
-          "type": "string"
+          "description": "Optional. Labels as key value pairs.",
+          "type": "object"
         },
         "location": {
-          "description": "Immutable. The geographic location where the connection should reside.\nCloud SQL instance must be in the same location as the connection\nwith following exceptions: Cloud SQL us-central1 maps to BigQuery US, Cloud SQL europe-west1 maps to BigQuery EU.\nExamples: US, EU, asia-northeast1, us-central1, europe-west1.\nSpanner Connections same as spanner region\nAWS allowed regions are aws-us-east-1\nAzure allowed regions are azure-eastus2.",
+          "description": "Immutable. Location of the instance.",
           "type": "string"
         },
         "projectRef": {
-          "description": "The project that this resource belongs to.",
+          "description": "Immutable. The Project that this resource belongs to.",
           "oneOf": [
             {
               "not": {
@@ -71,15 +64,19 @@
           ],
           "properties": {
             "external": {
-              "description": "Allowed value: The `name` field of a `Project` resource.",
+              "description": "The `projectID` field of a project, when not managed by KCC.",
+              "type": "string"
+            },
+            "kind": {
+              "description": "The kind of the Project resource; optional but must be `Project` if provided.",
               "type": "string"
             },
             "name": {
-              "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+              "description": "The `name` field of a `Project` resource.",
               "type": "string"
             },
             "namespace": {
-              "description": "Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/",
+              "description": "The `namespace` field of a `Project` resource.",
               "type": "string"
             }
           },
@@ -87,7 +84,7 @@
           "additionalProperties": false
         },
         "resourceID": {
-          "description": "Immutable. Optional. The connectionId of the resource. Used for creation and acquisition. When unset, the value of `metadata.name` is used as the default.",
+          "description": "Immutable. Optional. The name of the resource. Used for creation and acquisition. When unset, the value of `metadata.name` is used as the default.",
           "type": "string"
         }
       },
@@ -101,7 +98,7 @@
     "status": {
       "properties": {
         "conditions": {
-          "description": "Conditions represent the latest available observation of the resource's current state.",
+          "description": "Conditions represent the latest available observations of the SecureSourceManagerInstance's current state.",
           "items": {
             "properties": {
               "lastTransitionTime": {
@@ -130,31 +127,44 @@
           },
           "type": "array"
         },
-        "hasCredential": {
-          "description": "True if the connection has credential assigned.",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "The resource name of the connection in the form of:\n\"projects/{project_id}/locations/{location_id}/connections/{connectionId}\".",
-          "type": "string"
-        },
         "observedGeneration": {
           "description": "ObservedGeneration is the generation of the resource that was most recently observed by the Config Connector controller. If this is equal to metadata.generation, then that means that the current reported status reflects the most recent desired state of the resource.",
+          "format": "int64",
           "type": "integer"
         },
         "observedState": {
-          "description": "The observed state of the underlying GCP resource.",
+          "description": "ObservedState is the latest GCP state.",
           "properties": {
-            "cloudResource": {
-              "description": "Container for connection properties for delegation of access to GCP resources.",
+            "hostConfig": {
+              "description": "Output only. A list of hostnames for this instance.",
               "properties": {
-                "serviceAccountId": {
-                  "description": "The account ID of the service created for the purpose of this connection.",
+                "api": {
+                  "description": "Output only. API hostname. This is the hostname to use for **Host: Data Plane** endpoints.",
+                  "type": "string"
+                },
+                "gitHttp": {
+                  "description": "Output only. Git HTTP hostname.",
+                  "type": "string"
+                },
+                "gitSsh": {
+                  "description": "Output only. Git SSH hostname.",
+                  "type": "string"
+                },
+                "html": {
+                  "description": "Output only. HTML hostname.",
                   "type": "string"
                 }
               },
               "type": "object",
               "additionalProperties": false
+            },
+            "state": {
+              "description": "Output only. Current state of the instance.",
+              "type": "string"
+            },
+            "stateNote": {
+              "description": "Output only. An optional field providing information about the current instance state.",
+              "type": "string"
             }
           },
           "type": "object",
